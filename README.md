@@ -21,6 +21,11 @@ Additionally, install the required Python package for connecting to MySQL:
 ```bash
 pip install mysql-connector-python
 ```
+To start the required services (i.e., MySQL and phpMyAdmin), run the following command:
+
+```bash
+docker compose up -d
+```
 
 Once the services are up and running, generate the data by executing:
 
