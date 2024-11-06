@@ -12,9 +12,11 @@ def generate_name():
     last_name = random.choice(last_names)
     return f"{first_name} {last_name}"
 
+# amount paid
 def generate_amount():
     return random.randint(1,10) * 1000000
 
+# generate birthday and last purchase date
 def generate_date(start_year, end_year):
     year = random.randint(start_year, end_year)
     start_date = datetime(year, 1, 1)
@@ -22,6 +24,7 @@ def generate_date(start_year, end_year):
     random_date = start_date + timedelta(days=random_days)
     return random_date.strftime("%Y-%m-%d")
 
+# number of product bought
 def generate_num_product():
     return random.randint(1, 10)
 
@@ -44,9 +47,11 @@ with open("data/old.csv", "w") as old, open("data/new.csv", "w") as new:
         uid = uuid.uuid4()
         birth_date = generate_date(start_year=1960, end_year=1992)
         
+        # last purchase date
         old_date = generate_date(start_year=2010, end_year=2017)
         new_date = random.choice([old_date, generate_date(start_year=2018, end_year=2024)])
 
+        # about 30% of customer changed their phone number in new table
         old_phone = generate_phone_number()
         if random.random() < 0.3:
             new_phone = generate_phone_number()
@@ -68,7 +73,10 @@ with open("data/old.csv", "w") as old, open("data/new.csv", "w") as new:
         old_loyalty = loyalty_program()
         new_loyalty = loyalty_program()
         
+        # old database table contains 100 customers
         old.write(f"{uid},{name},{birth_date},{old_date},{old_phone},{old_num_pro},{old_amount},{old_loyalty}\n")
+        
+        # new data table contains about 90 customers from the old table but with updated information
         if random.random() < 0.9:
             new.write(f"{uid},{name},{birth_date},{new_date},{new_phone},{new_num_pro},{new_amount},{new_loyalty}\n")
         
@@ -82,4 +90,5 @@ with open("data/old.csv", "w") as old, open("data/new.csv", "w") as new:
         amount = generate_amount()
         loyalty = loyalty_program()
         
+        # generate another 20 customers for new data table only
         new.write(f"{uid},{name},{birth_date},{date},{phone},{number_of_product},{amount},{loyalty}\n")
